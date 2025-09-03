@@ -1,0 +1,17 @@
+name: Parent Workflow
+
+on:
+  workflow_dispatch: # déclenchable manuellement
+
+jobs:
+  call-child-morning:
+    uses: ./.github/workflows/child.yml
+    with:
+      name: "Alice"
+      time: "morning"
+
+  call-child-evening:
+    uses: ./.github/workflows/child.yml
+    with:
+      name: "Bob"
+      time: "evening"
