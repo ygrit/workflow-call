@@ -14,13 +14,18 @@ on:
 jobs:
   greet:
     runs-on: ubuntu-latest
+    outputs:
+      greeting-message: ${{ steps.greeting.outputs.message }}
     steps:
-      - name: Display greeting
+      - name: Set greeting message
+        id: greeting
         run: |
           if [ "${{ inputs.time }}" = "morning" ]; then
-            echo "Good morning, ${{ inputs.name }}!"
+            echo "message=Good morning, ${{ inputs.name }}!" >> $GITHUB_OUTPUT
           elif [ "${{ inputs.time }}" = "evening" ]; then
-            echo "Good evening, ${{ inputs.name }}!"
+            echo "message=Good evening, ${{ inputs.name }}!" >> $GITHUB_OUTPUT
           else
-            echo "Hello, ${{ inputs.name }}!"
-          fi
+            echo "message=Hello, ${{ inputs.name }}!" >> $GITHUB_OUTPUT
+
+      - name: Display greeting
+        run: echo "${{ steps.greeting.outputs.message }}"
