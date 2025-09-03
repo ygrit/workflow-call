@@ -1,17 +1,20 @@
 name: Parent Workflow
 
 on:
-  workflow_dispatch: # déclenchable manuellement
+  workflow_dispatch:
+    inputs:
+      user_name:
+        description: "Nom de l'utilisateur"
+        required: true
+        default: "Charlie"
+      moment:
+        description: "Moment de la journée (morning, evening, day)"
+        required: false
+        default: "day"
 
 jobs:
-  call-child-morning:
+  call-child:
     uses: ./.github/workflows/child.yml
     with:
-      name: "Alice"
-      time: "morning"
-
-  call-child-evening:
-    uses: ./.github/workflows/child.yml
-    with:
-      name: "Bob"
-      time: "evening"
+      name: ${{ inputs.user_name }}
+      time: ${{ inputs.moment }}
