@@ -1,1 +1,22 @@
+name: CI Demo with Workflow Output
 
+on:
+  workflow_dispatch:  # Permet un déclenchement manuel pour tester facilement
+
+  
+jobs:
+  # Job qui appelle le workflow réutilisable
+  call-demo:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      project-name: "DemoSansCode"  # Passage de l'input
+
+  # Job qui récupère l'output du workflow appelé
+  show-output:
+    runs-on: ubuntu-latest
+    needs: call-demo  # Attend la fin de call-demo
+    steps:
+      - name: Show workflow output
+        run: |
+          # Récupération de l'output build-status du workflow réutilisable
+          echo "🎯 Build status from reusable workflow: ${{ needs.call-demo.outputs.build-status }}"
