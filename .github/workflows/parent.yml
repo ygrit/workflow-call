@@ -18,9 +18,12 @@ jobs:
     with:
       name: ${{ inputs.user_name }}
       time: ${{ inputs.moment }}
+    secrets: inherit
     
   cleanup:
     runs-on: ubuntu-latest
     needs: call-child
     steps:
+      - name: Show greeting from child
+        run: echo "The child said: ${{ needs.call-child.outputs.greeting-message }}"
       - run: echo "Cleaning up after the greeting..."

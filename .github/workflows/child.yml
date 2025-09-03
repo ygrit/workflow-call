@@ -26,6 +26,7 @@ jobs:
             echo "message=Good evening, ${{ inputs.name }}!" >> $GITHUB_OUTPUT
           else
             echo "message=Hello, ${{ inputs.name }}!" >> $GITHUB_OUTPUT
+          fi
 
       - name: Display greeting
         run: echo "${{ steps.greeting.outputs.message }}"
