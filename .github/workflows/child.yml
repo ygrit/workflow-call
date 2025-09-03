@@ -1,0 +1,26 @@
+name: Child Workflow
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      time:
+        required: false
+        type: string
+        default: "day"
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display greeting
+        run: |
+          if [ "${{ inputs.time }}" = "morning" ]; then
+            echo "Good morning, ${{ inputs.name }}!"
+          elif [ "${{ inputs.time }}" = "evening" ]; then
+            echo "Good evening, ${{ inputs.name }}!"
+          else
+            echo "Hello, ${{ inputs.name }}!"
+          fi
